@@ -27,7 +27,7 @@ def new_player():
     new_player_dict['_id'] = str(new_player_dict['_id'])
     return new_player_dict
 
-@PLAYER_BP('/remove/<player_id>', methods=['DELETE'])
+@PLAYER_BP.route('/remove/<player_id>', methods=['DELETE'])
 def remove_player(player_id):
     player = Player.objects.delete(_id=player_id)
     player_dict = player.to_mongo()
