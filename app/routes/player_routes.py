@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
 from app.models.player import Player
+from app.models.contestant import Contestant
 
 PLAYER_BP = Blueprint('player_bp', __name__, url_prefix='/player')
 
@@ -26,6 +27,18 @@ def new_player():
     new_player_dict = new_player.to_mongo()
     new_player_dict['_id'] = str(new_player_dict['_id'])
     return new_player_dict
+
+@PLAYER_BP.route('/draft/<player_id>', methods=['POST'])
+def draft(player_id):
+    draft_data = request.json
+    contestant = Contestant.objects.get(id=draft_data['contestant_id'])
+    player = Player.objects.get(id=player_id)
+
+    player.team.append(contestant)
+    player.save()
+    player_dict = player.to_mongo()
+    player_dict['_id'] = str(player_dict['_id'])
+    return player_dict
 
 @PLAYER_BP.route('/remove/<player_id>', methods=['DELETE'])
 def remove_player(player_id):
