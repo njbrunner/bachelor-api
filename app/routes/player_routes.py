@@ -22,6 +22,19 @@ def get_players():
         player_dicts.append(player_dict)
     return make_response({'data': player_dicts}, HTTPStatus.OK)
 
+@PLAYER_BP.route('/<player_id>', methods=['GET'])
+def get_player(player_id):
+    player = Player.objects.get(id=player_id)
+    player_dict = player.to_mongo()
+    player_dict['_id'] = str(player_dict['_id'])
+    contestant_dicts = []
+    for contestant in player['team']:
+        contestant_dict = contestant.to_mongo()
+        contestant_dict['_id'] = str(contestant_dict['_id'])
+        contestant_dicts.append(contestant_dict)
+    player_dict['team'] = contestant_dicts
+    return player_dict
+
 @PLAYER_BP.route('/new', methods=['POST'])
 def new_player():
     player_data = request.json
