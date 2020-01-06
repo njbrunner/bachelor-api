@@ -13,6 +13,12 @@ def get_players():
     for player in players:
         player_dict = player.to_mongo()
         player_dict['_id'] = str(player_dict['_id'])
+        contestant_dicts = []
+        for contestant in player_dict['team']:
+            contestant_dict = contestant.to_mongo()
+            contestant_dict['_id'] = str(contestant_dict['_id'])
+            contestant_dicts.append(contestant_dict)
+        player_dict['team'] = contestant_dicts
         player_dicts.append(player_dict)
     return make_response({'data': player_dicts}, HTTPStatus.OK)
 
@@ -38,12 +44,19 @@ def draft(player_id):
     player.save()
     player_dict = player.to_mongo()
     player_dict['_id'] = str(player_dict['_id'])
+    contestant_dicts = []
+    for contestant in player_dict['team']:
+        contestant_dict = contestant.to_mongo()
+        contestant_dict['_id'] = str(contestant_dict['_id'])
+        contestant_dicts.append(contestant_dict)
+    player_dict['team'] = contestant_dicts
     return player_dict
 
 @PLAYER_BP.route('/remove/<player_id>', methods=['DELETE'])
 def remove_player(player_id):
     player = Player.objects.get(id=player_id)
     player.delete()
-    player_dict = player.to_mongo()
-    player_dict['_id'] = str(player_dict['_id'])
-    return player_dict
+    return 'Success'
+    # player_dict = player.to_mongo()
+    # player_dict['_id'] = str(player_dict['_id'])
+    # return player_dict
