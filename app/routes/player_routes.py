@@ -35,6 +35,10 @@ def get_player(player_id):
     player_dict['team'] = contestant_dicts
     return player_dict
 
+@PLAYER_BP.route('shuffle', methods=['GET'])
+def shuffle_players():
+    
+
 @PLAYER_BP.route('/new', methods=['POST'])
 def new_player():
     player_data = request.json
