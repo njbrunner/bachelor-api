@@ -14,7 +14,7 @@ def get_players():
         player_dict = player.to_mongo()
         player_dict['_id'] = str(player_dict['_id'])
         contestant_dicts = []
-        for contestant in player_dict['team']:
+        for contestant in player['team']:
             contestant_dict = contestant.to_mongo()
             contestant_dict['_id'] = str(contestant_dict['_id'])
             contestant_dicts.append(contestant_dict)
@@ -45,7 +45,7 @@ def draft(player_id):
     player_dict = player.to_mongo()
     player_dict['_id'] = str(player_dict['_id'])
     contestant_dicts = []
-    for contestant in player_dict['team']:
+    for contestant in player['team']:
         contestant_dict = contestant.to_mongo()
         contestant_dict['_id'] = str(contestant_dict['_id'])
         contestant_dicts.append(contestant_dict)
