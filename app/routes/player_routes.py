@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
 from app.models.player import Player
-from app.models.contestant import Contestant
+from app.models.contestants import Contestant
 
 PLAYER_BP = Blueprint('player_bp', __name__, url_prefix='/player')
 
