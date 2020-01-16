@@ -14,3 +14,11 @@ def get_contestants():
         contestant_dict['_id'] = str(contestant_dict['_id'])
         contestant_dicts.append(contestant_dict)
     return make_response({'data': contestant_dicts}, HTTPStatus.OK)
+
+@CONTESTANT_BP.route('/norose/<contestant_id>')
+def no_rose(contestant_id):
+    contestant = Contestant.objects.get(id=contestant_id)
+    contestant['active'] = False
+    contestant.save()
+
+    return 'Success'
