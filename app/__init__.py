@@ -4,11 +4,14 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_mongoengine import MongoEngine
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
+
+    JWT_SECRET_KEY = 'super-secret'
 
 
 class DevelopmentConfig(BaseConfig):
@@ -53,6 +56,7 @@ def initialize_extensions(app):# CORS
     CORS(app)
     mongo = PyMongo(app)
     db = MongoEngine(app)
+    jwt = JWTManager(app)
 
 def register_blueprints(app):
     from app.routes import hello
