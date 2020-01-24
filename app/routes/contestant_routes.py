@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
+from flask_jwt_extended import jwt_required
 from app.models.contestants import Contestant
 
 CONTESTANT_BP = Blueprint('contestant_bp', __name__, url_prefix='/contestant')
@@ -16,6 +17,7 @@ def get_contestants():
     return make_response({'data': contestant_dicts}, HTTPStatus.OK)
 
 @CONTESTANT_BP.route('/norose/<contestant_id>', methods=['POST'])
+@jwt_required
 def no_rose(contestant_id):
     contestant = Contestant.objects.get(id=contestant_id)
     contestant['active'] = False
