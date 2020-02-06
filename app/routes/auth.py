@@ -15,7 +15,7 @@ def login():
         return jsonify({'msg': 'Missing password parameter'}), 400
     
     admin = Admin.objects.get(name="admin")
-    if !check_password_hash(admin.password_hash, password):
+    if not check_password_hash(admin.password_hash, password):
         return jsonify({'msg': 'Invalid password'}), 401
 
     access_token = create_access_token(identity="admin")
