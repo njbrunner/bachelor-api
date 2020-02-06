@@ -3,4 +3,4 @@ from mongoengine import fields, Document
 
 class Admin(Document):
 
-    password = fields.StringField()
+    password_hash = fields.StringField()
