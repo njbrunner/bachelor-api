@@ -39,9 +39,11 @@ def get_player(player_id):
 
 @PLAYER_BP.route("/new", methods=["POST"])
 def new_player():
-    player_data = request.json
-    print("PLAYER DATA: ", player_data)
-    new_player = Player(name=player_data["name"], team=[])
+    player_name = request.json.get("name", None)
+    print("PLAYER NAME: ", player_name)
+    if not player_name:
+        return jsonify({'msg': 'Missing player name'}), 400
+    new_player = Player(name=player_name, team=[])
     new_player.save()
     new_player_dict = new_player.to_mongo()
     new_player_dict["_id"] = str(new_player_dict["_id"])
