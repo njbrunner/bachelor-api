@@ -7,3 +7,13 @@ __pycache__/
 
 # Visual Studio Code's project specific configuration
 .vscode/
+
+venv/
+
+# Web Scraper Files
+scraper.py
+data/
+
+requests.http
+
+.env
