@@ -63,5 +63,7 @@ def reset_draft_all():
     try:
         contestant_services.reset_all_draft_statuses()
         return "Success", HTTPStatus.OK
-    except:
+    except Exception as error:
+        print(error.message)
+        print(error)
         return "Error", HTTPStatus.BAD_REQUEST
