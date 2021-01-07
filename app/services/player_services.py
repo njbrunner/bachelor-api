@@ -12,7 +12,7 @@ def get_all_players():
 
 def get_player(player_id):
     """Get single player from id."""
-    return Player.objects.get(id=player_id)
+    return Player.objects.get(_id=player_id)
 
 
 def create_player(player_name: str):
@@ -37,6 +37,20 @@ def draft_contestant(player_id, contestant_id):
     contestant.save()
     player.team.append(contestant)
     player.save()
+
+
+def remove_drafted_contestants(player_id):
+    """Remove all contestants from player team."""
+    player = get_player(player_id)
+    player.team = []
+    player.save()
+
+
+def remove_all_drafted_contestants():
+    """Remove all contestants from all players."""
+    players = get_all_players()
+    for player in players:
+        remove_drafted_contestants(player._id)
 
 
 def shuffle_players():
