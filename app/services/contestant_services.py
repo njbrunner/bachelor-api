@@ -8,7 +8,7 @@ def get_all_contestants():
 
 def get_contestant(contestant_id):
     """Get single contestant from id."""
-    return Contestant.objects.get(id=contestant_id)
+    return Contestant.objects.get(_id=contestant_id)
 
 
 def draft_contestant(contestant_id):
