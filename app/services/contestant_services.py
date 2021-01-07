@@ -22,6 +22,7 @@ def reset_draft_status(contestant_id):
     """Set drafted status of contestant to false."""
     contestant = get_contestant(contestant_id)
     contestant.drafted = False
+    print(contestant)
     contestant.save()
 
 
