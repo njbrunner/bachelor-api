@@ -27,8 +27,9 @@ def create_player(player_name: str):
 def remove_player(player_id):
     """Remove single player."""
     player = get_player(player_id)
-    logging.warning('[REMOVE PLAYER]: ' + player.name)
+    logging.warning("[REMOVE PLAYER]: " + player.name)
     player.delete()
+    logging.warning("[REMOVE PLAYER]: " + "Player deleted.")
 
 
 def draft_contestant(player_id, contestant_id):
