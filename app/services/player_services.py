@@ -1,3 +1,4 @@
+import logging
 import random
 import copy
 from app.models.player import Player
@@ -12,6 +13,7 @@ def get_all_players():
 
 def get_player(player_id):
     """Get single player from id."""
+    logging.warning("[GET PLAYER]: " + player_id)
     return Player.objects.get(_id=player_id)
 
 
@@ -25,6 +27,7 @@ def create_player(player_name: str):
 def remove_player(player_id):
     """Remove single player."""
     player = get_player(player_id)
+    logging.warning('[REMOVE PLAYER]: ' + player.name)
     player.delete()
 
 
