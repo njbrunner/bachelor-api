@@ -1,3 +1,4 @@
+import logging
 from http import HTTPStatus
 from flask import Blueprint, make_response
 from flask_jwt_extended import jwt_required
@@ -24,6 +25,7 @@ def no_rose(contestant_id):
         contestant_services.deactivate_contestant(contestant_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
@@ -34,6 +36,7 @@ def add_rose(contestant_id):
         contestant_services.add_rose(contestant_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
@@ -44,6 +47,7 @@ def subtract_rose(contestant_id):
         contestant_services.subtract_rose(contestant_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
@@ -54,6 +58,7 @@ def reset_draft_status(contestant_id):
         contestant_services.reset_draft_status(contestant_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
@@ -65,4 +70,5 @@ def reset_draft_all():
         player_services.remove_all_drafted_contestants()
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
