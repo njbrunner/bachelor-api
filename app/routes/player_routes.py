@@ -8,8 +8,7 @@ PLAYER_BP = Blueprint("player_bp", __name__, url_prefix="/player")
 
 @PLAYER_BP.route("/", methods=["GET"])
 def get_players():
-    # players = player_services.get_all_players()
-    players = Player.objects
+    players = player_services.get_all_players()
     player_dicts = list()
     for player in players:
         player_dict = player.to_mongo()
@@ -57,15 +56,6 @@ def draft(player_id):
         return jsonify({"message": "Missing contestant id"}), HTTPStatus.BAD_REQUEST
     player_services.draft_contestant(player_id, contestant_id)
     return "Success", HTTPStatus.OK
-    # player_dict = player.to_mongo()
-    # player_dict["_id"] = str(player_dict["_id"])
-    # contestant_dicts = []
-    # for contestant in player["team"]:
-    #     contestant_dict = contestant.to_mongo()
-    #     contestant_dict["_id"] = str(contestant_dict["_id"])
-    #     contestant_dicts.append(contestant_dict)
-    # player_dict["team"] = contestant_dicts
-    # return player_dict
 
 
 @PLAYER_BP.route("/remove/<player_id>", methods=["DELETE"])

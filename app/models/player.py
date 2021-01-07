@@ -5,3 +5,4 @@ class Player(Document):
 
     name = fields.StringField()
     team = fields.ListField()
+    draft_position = fields.IntField()
