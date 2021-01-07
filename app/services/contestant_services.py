@@ -30,6 +30,7 @@ def reset_all_draft_statuses():
     """Reset all contestant draft statuses to false."""
     contestants = get_all_contestants()
     for contestant in contestants:
+        print(contestant)
         reset_draft_status(contestant._id)
 
 

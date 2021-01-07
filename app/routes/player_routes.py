@@ -12,7 +12,6 @@ def get_players():
     player_dicts = list()
     for player in players:
         player_dict = player.to_mongo()
-        print(player_dict)
         player_dict["_id"] = str(player_dict["_id"])
         contestant_dicts = []
         for contestant in player["team"]:
