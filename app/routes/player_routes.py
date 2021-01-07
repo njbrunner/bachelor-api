@@ -2,6 +2,7 @@ from app.models.player import Player
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
 from app.services import player_services
+import logging
 
 PLAYER_BP = Blueprint("player_bp", __name__, url_prefix="/player")
 
@@ -69,4 +70,5 @@ def remove_player(player_id):
         player_services.remove_player(player_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
+        logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
