@@ -31,6 +31,8 @@ def reset_all_draft_statuses():
     contestants = get_all_contestants()
     for contestant in contestants:
         print(contestant)
+        # TODO: Fix error occuring on following line: Contestant has no field _id
+        #       look to see if _id is addressed anywhere else, maybe add _id to Contestant model.
         reset_draft_status(contestant._id)
 
 
