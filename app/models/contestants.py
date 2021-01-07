@@ -4,7 +4,6 @@ from mongoengine import fields, Document
 class Contestant(Document):
     """Contestant model definition."""
 
-    _id = fields.ObjectIdField()
     name = fields.StringField()
     age = fields.StringField()
     occupation = fields.StringField()

@@ -8,7 +8,7 @@ def get_all_contestants():
 
 def get_contestant(contestant_id):
     """Get single contestant from id."""
-    return Contestant.objects.get(_id=contestant_id)
+    return Contestant.objects.get(pk=contestant_id)
 
 
 def draft_contestant(contestant_id):
@@ -30,7 +30,7 @@ def reset_all_draft_statuses():
     """Reset all contestant draft statuses to false."""
     contestants = get_all_contestants()
     for contestant in contestants:
-        reset_draft_status(contestant._id)
+        reset_draft_status(contestant.pk)
 
 
 def deactivate_contestant(contestant_id):
