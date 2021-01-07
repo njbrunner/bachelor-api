@@ -23,8 +23,8 @@ def no_rose(contestant_id):
     try:
         contestant_services.deactivate_contestant(contestant_id)
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST
 
 
 @CONTESTANT_BP.route("/rose/add/<contestant_id>", methods=["PUT"])
@@ -33,8 +33,8 @@ def add_rose(contestant_id):
     try:
         contestant_services.add_rose(contestant_id)
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST
 
 
 @CONTESTANT_BP.route("/rose/subtract/<contestant_id>", methods=["PUT"])
@@ -43,8 +43,8 @@ def subtract_rose(contestant_id):
     try:
         contestant_services.subtract_rose(contestant_id)
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST
 
 
 @CONTESTANT_BP.route("/draft/reset/<contestant_id>", methods=["PUT"])
@@ -53,8 +53,8 @@ def reset_draft_status(contestant_id):
     try:
         contestant_services.reset_draft_status(contestant_id)
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST
 
 
 @CONTESTANT_BP.route("/draft/reset/all", methods=["PUT"])
@@ -64,5 +64,5 @@ def reset_draft_all():
         contestant_services.reset_all_draft_statuses()
         player_services.remove_all_drafted_contestants()
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST

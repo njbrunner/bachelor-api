@@ -32,7 +32,6 @@ def draft_contestant(player_id, contestant_id):
     """Draft a contestant to a player."""
     player = get_player(player_id)
     contestant = contestant_services.get_contestant(contestant_id)
-
     contestant.drafted = True
     contestant.save()
     player.team.append(contestant)

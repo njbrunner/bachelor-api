@@ -68,5 +68,5 @@ def remove_player(player_id):
     try:
         player_services.remove_player(player_id)
         return "Success", HTTPStatus.OK
-    except:
-        return "Error", HTTPStatus.BAD_REQUEST
+    except Exception as exception:
+        return str(exception), HTTPStatus.BAD_REQUEST
