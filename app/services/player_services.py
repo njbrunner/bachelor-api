@@ -14,7 +14,7 @@ def get_all_players():
 def get_player(player_id):
     """Get single player from id."""
     logging.warning("[GET PLAYER]: " + player_id)
-    return Player.objects.get(_id=player_id)
+    return Player.objects.get(pk=player_id)
 
 
 def create_player(player_name: str):
@@ -53,7 +53,7 @@ def remove_all_drafted_contestants():
     """Remove all contestants from all players."""
     players = get_all_players()
     for player in players:
-        remove_drafted_contestants(player._id)
+        remove_drafted_contestants(player.pk)
 
 
 def shuffle_players():
