@@ -1,3 +1,4 @@
+from app.models.player import Player
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
 from app.services import player_services
@@ -7,10 +8,12 @@ PLAYER_BP = Blueprint("player_bp", __name__, url_prefix="/player")
 
 @PLAYER_BP.route("/", methods=["GET"])
 def get_players():
-    players = player_services.get_all_players()
+    # players = player_services.get_all_players()
+    players = Player.objects
     player_dicts = list()
     for player in players:
         player_dict = player.to_mongo()
+        print(player_dict)
         player_dict["_id"] = str(player_dict["_id"])
         contestant_dicts = []
         for contestant in player["team"]:
@@ -47,21 +50,22 @@ def new_player():
     return new_player_dict
 
 
-@PLAYER_BP.route("/draft/<player_id>", methods=["POST"])
+@PLAYER_BP.route("/draft/<player_id>", methods=["PUT"])
 def draft(player_id):
     contestant_id = request.json.get("contestant_id", None)
     if not contestant_id:
         return jsonify({"message": "Missing contestant id"}), HTTPStatus.BAD_REQUEST
-    player = player_services.draft_contestant(player_id, contestant_id)
-    player_dict = player.to_mongo()
-    player_dict["_id"] = str(player_dict["_id"])
-    contestant_dicts = []
-    for contestant in player["team"]:
-        contestant_dict = contestant.to_mongo()
-        contestant_dict["_id"] = str(contestant_dict["_id"])
-        contestant_dicts.append(contestant_dict)
-    player_dict["team"] = contestant_dicts
-    return player_dict
+    player_services.draft_contestant(player_id, contestant_id)
+    return "Success", HTTPStatus.OK
+    # player_dict = player.to_mongo()
+    # player_dict["_id"] = str(player_dict["_id"])
+    # contestant_dicts = []
+    # for contestant in player["team"]:
+    #     contestant_dict = contestant.to_mongo()
+    #     contestant_dict["_id"] = str(contestant_dict["_id"])
+    #     contestant_dicts.append(contestant_dict)
+    # player_dict["team"] = contestant_dicts
+    # return player_dict
 
 
 @PLAYER_BP.route("/remove/<player_id>", methods=["DELETE"])
