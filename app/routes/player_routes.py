@@ -68,9 +68,7 @@ def draft(player_id):
 def remove_player(player_id):
     try:
         logging.warning(player_id)
-        logging.debug("TEST DEBUG")
         player_services.remove_player(player_id)
-        logging.warning("[PLAYER ROUTE]: " + "Finished")
         return "Success", HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))

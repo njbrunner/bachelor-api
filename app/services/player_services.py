@@ -13,7 +13,6 @@ def get_all_players():
 
 def get_player(player_id):
     """Get single player from id."""
-    logging.warning("[GET PLAYER]: " + player_id)
     return Player.objects.get(pk=player_id)
 
 
@@ -27,9 +26,7 @@ def create_player(player_name: str):
 def remove_player(player_id):
     """Remove single player."""
     player = get_player(player_id)
-    logging.warning("[REMOVE PLAYER]: " + player.name)
     player.delete()
-    logging.warning("[REMOVE PLAYER]: " + "Player deleted.")
 
 
 def draft_contestant(player_id, contestant_id):

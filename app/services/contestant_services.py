@@ -23,9 +23,7 @@ def reset_draft_status(contestant_id):
     """Set drafted status of contestant to false."""
     contestant = get_contestant(contestant_id)
     contestant.drafted = False
-    logging.warning('BEFORE')
     contestant.save()
-    logging.warning('AFTER')
 
 
 def reset_all_draft_statuses():
