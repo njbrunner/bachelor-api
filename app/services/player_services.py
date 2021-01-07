@@ -1,10 +1,13 @@
+import random
+import copy
 from app.models.player import Player
 from app.services import contestant_services
 
 
 def get_all_players():
     """Get all players."""
-    return Player.objects
+    players = Player.objects
+    return sorted(players, key=lambda x: x.draft_position)
 
 
 def get_player(player_id):
@@ -26,7 +29,7 @@ def remove_player(player_id):
 
 
 def draft_contestant(player_id, contestant_id):
-    """Draft a contestant to a team."""
+    """Draft a contestant to a player."""
     player = get_player(player_id)
     contestant = contestant_services.get_contestant(contestant_id)
 
@@ -34,3 +37,14 @@ def draft_contestant(player_id, contestant_id):
     contestant.save()
     player.team.append(contestant)
     player.save()
+
+
+def shuffle_players():
+    """Set random draft positions for each player."""
+    players = get_all_players()
+    available_players = copy.deepcopy(players)
+    for x in range(len(players)):
+        player = random.choice(available_players)
+        available_players.remove(player)
+        player.draft_position = x
+        player.save()

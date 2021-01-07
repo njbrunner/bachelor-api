@@ -49,6 +49,12 @@ def new_player():
     return new_player_dict
 
 
+@PLAYER_BP.route("/shuffle", methods=["PUT"])
+def shuffle_players():
+    player_services.shuffle_players()
+    return "Success", HTTPStatus.OK
+
+
 @PLAYER_BP.route("/draft/<player_id>", methods=["PUT"])
 def draft(player_id):
     contestant_id = request.json.get("contestant_id", None)
