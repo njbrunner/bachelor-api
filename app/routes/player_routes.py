@@ -1,14 +1,13 @@
 from http import HTTPStatus
 from flask import Blueprint, request, make_response, jsonify
-from app.models.player import Player
-from app.models.contestants import Contestant
+from app.services import player_services
 
 PLAYER_BP = Blueprint("player_bp", __name__, url_prefix="/player")
 
 
 @PLAYER_BP.route("/", methods=["GET"])
 def get_players():
-    players = Player.objects
+    players = player_services.get_all_players()
     player_dicts = list()
     for player in players:
         player_dict = player.to_mongo()
@@ -25,7 +24,7 @@ def get_players():
 
 @PLAYER_BP.route("/<player_id>", methods=["GET"])
 def get_player(player_id):
-    player = Player.objects.get(id=player_id)
+    player = player_services.get_player(player_id)
     player_dict = player.to_mongo()
     player_dict["_id"] = str(player_dict["_id"])
     contestant_dicts = []
@@ -41,9 +40,8 @@ def get_player(player_id):
 def new_player():
     player_name = request.json.get("name", None)
     if not player_name:
-        return jsonify({"msg": "Missing player name"}), 400
-    new_player = Player(name=player_name, team=[])
-    new_player.save()
+        return jsonify({"msg": "Missing player name"}), HTTPStatus.BAD_REQUEST
+    new_player = player_services.create_player(player_name)
     new_player_dict = new_player.to_mongo()
     new_player_dict["_id"] = str(new_player_dict["_id"])
     return new_player_dict
@@ -51,12 +49,10 @@ def new_player():
 
 @PLAYER_BP.route("/draft/<player_id>", methods=["POST"])
 def draft(player_id):
-    draft_data = request.json
-    contestant = Contestant.objects.get(id=draft_data["contestant_id"])
-    player = Player.objects.get(id=player_id)
-
-    player.team.append(contestant)
-    player.save()
+    contestant_id = request.json.get("contestant_id", None)
+    if not contestant_id:
+        return jsonify({"message": "Missing contestant id"}), HTTPStatus.BAD_REQUEST
+    player = player_services.draft_contestant(player_id, contestant_id)
     player_dict = player.to_mongo()
     player_dict["_id"] = str(player_dict["_id"])
     contestant_dicts = []
@@ -70,9 +66,8 @@ def draft(player_id):
 
 @PLAYER_BP.route("/remove/<player_id>", methods=["DELETE"])
 def remove_player(player_id):
-    player = Player.objects.get(id=player_id)
-    player.delete()
-    return "Success"
-    # player_dict = player.to_mongo()
-    # player_dict['_id'] = str(player_dict['_id'])
-    # return player_dict
+    try:
+        player_services.remove_player(player_id)
+        return "Success", HTTPStatus.OK
+    except:
+        return "Error", HTTPStatus.BAD_REQUEST
