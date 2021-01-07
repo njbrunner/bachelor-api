@@ -67,6 +67,8 @@ def draft(player_id):
 @PLAYER_BP.route("/remove/<player_id>", methods=["DELETE"])
 def remove_player(player_id):
     try:
+        logging.warning(player_id)
+        logging.debug("TEST DEBUG")
         player_services.remove_player(player_id)
         return "Success", HTTPStatus.OK
     except Exception as exception:
