@@ -14,3 +14,18 @@ class Contestant(Document):
     active = fields.BooleanField()
     drafted = fields.BooleanField()
     roses = fields.IntField()
+
+    def to_json(self):
+        return {
+            "_id": str(self.pk),
+            "name": self.name,
+            "age": self.age,
+            "occupation": self.occupation,
+            "location": self.location,
+            "detail": self.detail,
+            "facts": self.facts,
+            "image": self.image,
+            "active": self.active,
+            "drafted": self.drafted,
+            "roses": self.roses,
+        }
