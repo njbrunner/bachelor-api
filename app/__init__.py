@@ -15,6 +15,7 @@ class BaseConfig(object):
     TESTING = False
 
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    JWT_ACCESS_TOKEN_EXPIRES = os.getenv("JWT_ACCESS_TOKEN_EXPIRES")
 
 
 class DevelopmentConfig(BaseConfig):
