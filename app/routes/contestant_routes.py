@@ -9,13 +9,17 @@ CONTESTANT_BP = Blueprint("contestant_bp", __name__, url_prefix="/contestant")
 
 @CONTESTANT_BP.route("/")
 def get_contestants():
-    contestants = contestant_services.get_all_contestants()
-    contestant_dicts = list()
-    for contestant in contestants:
-        contestant_dict = contestant.to_mongo()
-        contestant_dict["_id"] = str(contestant_dict["_id"])
-        contestant_dicts.append(contestant_dict)
-    return make_response({"data": contestant_dicts}, HTTPStatus.OK)
+    try:
+        contestants = contestant_services.get_all_contestants()
+        contestant_dicts = list()
+        for contestant in contestants:
+            contestant_dict = contestant.to_mongo()
+            contestant_dict["_id"] = str(contestant_dict["_id"])
+            contestant_dicts.append(contestant_dict)
+        return make_response({"data": contestant_dicts}, HTTPStatus.OK)
+    except Exception as exception:
+        logging.error(str(exception))
+        return str(exception), HTTPStatus.BAD_REQUEST
 
 
 @CONTESTANT_BP.route("/norose/<contestant_id>", methods=["PUT"])
