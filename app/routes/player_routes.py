@@ -12,17 +12,6 @@ def get_players():
     try:
         players = player_services.get_all_players()
         player_dicts = [player.to_json() for player in players]
-        # player_dicts = list()
-        # for player in players:
-        #     player_dict = player.to_mongo()
-        #     player_dict["_id"] = str(player_dict["_id"])
-        #     contestant_dicts = []
-        #     for contestant in player["team"]:
-        #         contestant_dict = contestant.to_mongo()
-        #         contestant_dict["_id"] = str(contestant_dict["_id"])
-        #         contestant_dicts.append(contestant_dict)
-        #     player_dict["team"] = contestant_dicts
-        #     player_dicts.append(player_dict)
         return make_response({"data": player_dicts}, HTTPStatus.OK)
     except Exception as exception:
         logging.error(str(exception))
@@ -34,14 +23,6 @@ def get_player(player_id):
     try:
         player = player_services.get_player(player_id)
         player_dict = player.to_json()
-        # player_dict = player.to_mongo()
-        # player_dict["_id"] = str(player_dict["_id"])
-        # contestant_dicts = []
-        # for contestant in player["team"]:
-        #     contestant_dict = contestant.to_mongo()
-        #     contestant_dict["_id"] = str(contestant_dict["_id"])
-        #     contestant_dicts.append(contestant_dict)
-        # player_dict["team"] = contestant_dicts
         return player_dict, HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))
