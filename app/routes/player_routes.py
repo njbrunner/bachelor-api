@@ -11,17 +11,18 @@ PLAYER_BP = Blueprint("player_bp", __name__, url_prefix="/player")
 def get_players():
     try:
         players = player_services.get_all_players()
-        player_dicts = list()
-        for player in players:
-            player_dict = player.to_mongo()
-            player_dict["_id"] = str(player_dict["_id"])
-            contestant_dicts = []
-            for contestant in player["team"]:
-                contestant_dict = contestant.to_mongo()
-                contestant_dict["_id"] = str(contestant_dict["_id"])
-                contestant_dicts.append(contestant_dict)
-            player_dict["team"] = contestant_dicts
-            player_dicts.append(player_dict)
+        player_dicts = [player.to_json() for player in players]
+        # player_dicts = list()
+        # for player in players:
+        #     player_dict = player.to_mongo()
+        #     player_dict["_id"] = str(player_dict["_id"])
+        #     contestant_dicts = []
+        #     for contestant in player["team"]:
+        #         contestant_dict = contestant.to_mongo()
+        #         contestant_dict["_id"] = str(contestant_dict["_id"])
+        #         contestant_dicts.append(contestant_dict)
+        #     player_dict["team"] = contestant_dicts
+        #     player_dicts.append(player_dict)
         return make_response({"data": player_dicts}, HTTPStatus.OK)
     except Exception as exception:
         logging.error(str(exception))
@@ -32,15 +33,16 @@ def get_players():
 def get_player(player_id):
     try:
         player = player_services.get_player(player_id)
-        player_dict = player.to_mongo()
-        player_dict["_id"] = str(player_dict["_id"])
-        contestant_dicts = []
-        for contestant in player["team"]:
-            contestant_dict = contestant.to_mongo()
-            contestant_dict["_id"] = str(contestant_dict["_id"])
-            contestant_dicts.append(contestant_dict)
-        player_dict["team"] = contestant_dicts
-        return player_dict
+        player_dict = player.to_json()
+        # player_dict = player.to_mongo()
+        # player_dict["_id"] = str(player_dict["_id"])
+        # contestant_dicts = []
+        # for contestant in player["team"]:
+        #     contestant_dict = contestant.to_mongo()
+        #     contestant_dict["_id"] = str(contestant_dict["_id"])
+        #     contestant_dicts.append(contestant_dict)
+        # player_dict["team"] = contestant_dicts
+        return player_dict, HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
@@ -53,9 +55,8 @@ def new_player():
         if not player_name:
             return jsonify({"msg": "Missing player name"}), HTTPStatus.BAD_REQUEST
         new_player = player_services.create_player(player_name)
-        new_player_dict = new_player.to_mongo()
-        new_player_dict["_id"] = str(new_player_dict["_id"])
-        return new_player_dict
+        new_player_dict = new_player.to_json()
+        return new_player_dict, HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST

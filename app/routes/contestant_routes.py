@@ -12,11 +12,6 @@ def get_contestants():
     try:
         contestants = contestant_services.get_all_contestants()
         contestant_dicts = [contestant.to_json() for contestant in contestants]
-        # contestant_dicts = list()
-        # for contestant in contestants:
-        #     contestant_dict = contestant.to_mongo()
-        #     contestant_dict["_id"] = str(contestant_dict["_id"])
-        #     contestant_dicts.append(contestant_dict)
         return make_response({"data": contestant_dicts}, HTTPStatus.OK)
     except Exception as exception:
         logging.error(str(exception))
