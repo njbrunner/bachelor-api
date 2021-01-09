@@ -61,3 +61,11 @@ def subtract_rose(contestant_id):
     contestant = get_contestant(contestant_id)
     contestant.roses -= 1
     contestant.save()
+
+
+def subtract_rose_from_all_active():
+    """Decrease roses of all active contestants by one."""
+    contestants = get_all_contestants()
+    for contestant in contestants:
+        if contestant.active:
+            subtract_rose(contestant.pk)

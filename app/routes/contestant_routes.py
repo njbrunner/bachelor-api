@@ -62,6 +62,17 @@ def subtract_rose(contestant_id):
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
+@CONTESTANT_BP.route("/rose/subtract/all", methods=["PUT"])
+@jwt_required
+def subtract_rose_all():
+    try:
+        contestant_services.subtract_rose_from_all_active()
+        return "Success", HTTPStatus.OK
+    except Exception as exception:
+        logging.error(str(exception))
+        return str(exception), HTTPStatus.BAD_REQUEST
+
+
 @CONTESTANT_BP.route("/draft/reset/<contestant_id>", methods=["PUT"])
 @jwt_required
 def reset_draft_status(contestant_id):
