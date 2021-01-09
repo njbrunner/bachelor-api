@@ -62,7 +62,7 @@ def subtract_rose(contestant_id):
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
-@CONTESTANT_BP.route("/subtract/rose/all", methods=["PUT"])
+@CONTESTANT_BP.route("/rose/subtract/all", methods=["PUT"])
 @jwt_required
 def subtract_rose_all():
     try:
