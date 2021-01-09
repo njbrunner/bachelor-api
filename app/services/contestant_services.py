@@ -4,7 +4,8 @@ from app.models.contestants import Contestant
 
 def get_all_contestants():
     """Get all contestants."""
-    return Contestant.objects
+    contestants = Contestant.objects
+    return sorted(contestants, key=lambda x: x.active)
 
 
 def get_contestant(contestant_id):
