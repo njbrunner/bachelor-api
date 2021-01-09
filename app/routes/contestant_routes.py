@@ -40,6 +40,16 @@ def add_rose(contestant_id):
         return str(exception), HTTPStatus.BAD_REQUEST
 
 
+@CONTESTANT_BP.route("/rose/add/all", methods=["PUT"])
+@jwt_required
+def add_rose_all():
+    try:
+        contestant_services.add_rose_to_all_active()
+    except Exception as exception:
+        logging.error(str(exception))
+        return str(exception), HTTPStatus.BAD_REQUEST
+
+
 @CONTESTANT_BP.route("/rose/subtract/<contestant_id>", methods=["PUT"])
 @jwt_required
 def subtract_rose(contestant_id):

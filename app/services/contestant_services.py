@@ -48,6 +48,14 @@ def add_rose(contestant_id):
     contestant.save()
 
 
+def add_rose_to_all_active():
+    """Increase roses of all active contestants by one."""
+    contestants = get_all_contestants()
+    for contestant in contestants:
+        if contestant.active:
+            add_rose(contestant.pk)
+
+
 def subtract_rose(contestant_id):
     """Decrease roses of contestant by one."""
     contestant = get_contestant(contestant_id)
