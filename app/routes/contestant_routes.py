@@ -45,6 +45,7 @@ def add_rose(contestant_id):
 def add_rose_all():
     try:
         contestant_services.add_rose_to_all_active()
+        return "Success", HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
