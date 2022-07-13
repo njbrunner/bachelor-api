@@ -18,7 +18,7 @@ def get_team(team_id):
 
 def create_team(team_name: str, owner: str):
     """Create new team."""
-    new_team = Team(name=team_name, owner=owner, team=[], draft_position=0)
+    new_team = Team(name=team_name, owner=owner, team_members=[], draft_position=0)
     new_team.save()
     return new_team
 
