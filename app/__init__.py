@@ -59,10 +59,10 @@ def initialize_extensions(app):
 def register_blueprints(app):
     from app.routes import hello
     from app.routes import contestant_routes
-    from app.routes import player_routes
+    from app.routes import team_routes
     from app.routes import auth
 
     app.register_blueprint(hello.HELLO_BP)
     app.register_blueprint(contestant_routes.CONTESTANT_BP)
-    app.register_blueprint(player_routes.PLAYER_BP)
+    app.register_blueprint(team_routes.TEAM_BP)
     app.register_blueprint(auth.AUTH_BP)

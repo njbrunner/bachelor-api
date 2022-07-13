@@ -2,7 +2,7 @@ import logging
 from http import HTTPStatus
 from flask import Blueprint, make_response
 from flask_jwt_extended import jwt_required
-from app.services import contestant_services, player_services
+from app.services import contestant_services, team_services
 
 CONTESTANT_BP = Blueprint("contestant_bp", __name__, url_prefix="/contestant")
 
@@ -89,7 +89,7 @@ def reset_draft_status(contestant_id):
 def reset_draft_all():
     try:
         contestant_services.reset_all_draft_statuses()
-        player_services.remove_all_drafted_contestants()
+        team_services.remove_all_drafted_contestants()
         return "Success", HTTPStatus.OK
     except Exception as exception:
         logging.error(str(exception))
