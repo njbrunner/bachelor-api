@@ -18,7 +18,10 @@ def get_team(team_id):
 
 def create_team(team_name: str, owner: str):
     """Create new team."""
+    print(f"Name: {team_name}")
+    print(f"Owner: {owner}")
     new_team = Team(name=team_name, owner=owner, team_members=[], draft_position=0)
+    print(new_team.to_json())
     new_team.save()
     return new_team
 

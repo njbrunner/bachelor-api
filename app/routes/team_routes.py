@@ -41,6 +41,7 @@ def new_team():
         new_team_dict = new_team.to_json()
         return new_team_dict, HTTPStatus.OK
     except Exception as exception:
+        print(str(exception))
         logging.error(str(exception))
         return str(exception), HTTPStatus.BAD_REQUEST
 
